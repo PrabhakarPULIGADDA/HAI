@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #333;
+        }
+        
+        #word-container {
+            margin: 20px 0;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        form {
+            margin-top: 20px;
+        }
+        
+        label {
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+        
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 40px;
+            text-align: center;
+        }
+        
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #555;
+        }
+        
+        #message {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Word Guessing Game</h1>
+        <div id="word-container">
+            <!-- Hidden word will be dynamically inserted here -->
+        </div>
+        <form id="guessForm">
+            <label for="guessInput">Guess a letter:</label>
+            <input type="text" id="guessInput" name="guess" maxlength="1" required>
+            <button type="submit" onclick="submitGuess()">Submit</button>
+        </form>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        // Define an array of words to guess
+        const words = ['HELLO', 'WORLD', 'PYTHON', 'JAVASCRIPT', 'PROGRAMMING'];
+
+        let hiddenWord = '';
+        let guessedLetters = [];
+        let attempts = 0;
+        let maxAttempts = 6; // Adjust this as needed
+
+        // Function to start the game
+        function startGame() {
+            // Choose a random word from the words array
+            hiddenWord = words[Math.floor(Math.random() * words.length)];
+
+            // Initialize guessedLetters array with underscores
+            guessedLetters = Array(hiddenWord.length).fill('_');
+
+            // Display the hidden word with underscores
+            displayWord();
+
+            // Clear any previous messages
+            document.getElementById('message').textContent = '';
+        }
+
+        // Function to display the hidden word with guessed letters
+        function displayWord() {
+            let wordContainer = document.getElementById('word-container');
+            wordContainer.innerHTML = '';
+            guessedLetters.forEach(letter => {
+                let letterSpan = document.createElement('span');
+                letterSpan.textContent = letter + ' ';
+                wordContainer.appendChild(letterSpan);
+            });
+        }
+
+        // Function to handle form submission (guessing a letter)
+        function submitGuess() {
+            event.preventDefault();
+            let guess = document.getElementById('guessInput').value.toUpperCase();
+            if (guess.length !== 1 || !(/[A-Z]/.test(guess))) {
+                alert('Please enter a single letter (A-Z).');
+                return;
+            }
+
+            // Check if the guessed letter is in the hidden word
+            let found = false;
+            for (let i = 0; i < hiddenWord.length; i++) {
+                if (hiddenWord[i] === guess) {
+                    guessedLetters[i] = guess;
+                    found = true;
+                }
+            }
+
+            // Update displayed word
+            displayWord();
+
+            // Check game status (win or lose)
+            if (guessedLetters.join('') === hiddenWord) {
+                document.getElementById('message').textContent = 'Congratulations! You guessed the word!';
+                disableInput();
+            } else if (!found) {
+                attempts++;
+                updateAttemptsMessage();
+                if (attempts >= maxAttempts) {
+                    document.getElementById('message').textContent = 'Game Over! The word was: ' + hiddenWord;
+                    disableInput();
+                }
+            }
+
+            // Clear guess input
+            document.getElementById('guessInput').value = '';
+        }
+
+        // Function to update attempts message
+        function updateAttemptsMessage() {
+            let remainingAttempts = maxAttempts - attempts;
+            document.getElementById('message').textContent = `Wrong guess! ${remainingAttempts} attempt(s) left.`;
+        }
+
+        // Function to disable input after game ends
+        function disableInput() {
+            document.getElementById('guessInput').disabled = true;
+            document.querySelector('button[type="submit"]').disabled = true;
+        }
+
+        // Initialize the game when the page loads
+        window.onload = startGame;
+    </script>
+</body>
+</html>
