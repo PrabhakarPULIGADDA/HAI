@@ -69,11 +69,7 @@
         <div class="instructions">
             <h3>Instructions:</h3>
             <ol>
-                <li>Multiply the first number of your age by five.</li>
-                <li>Add three to the result.</li>
-                <li>Double the resulting figure.</li>
-                <li>Add the second number of your age to that number.</li>
-                <li>Subtract six. The result will be your current age.</li>
+                <li>Follow My Instructions to Find Your age😄</li></li>
             </ol>
             <p>Click "Start Game" to begin.</p>
         </div>
@@ -119,8 +115,7 @@
         function startGame() {
             document.getElementById('start-page').style.display = 'none';
             document.getElementById('game-page').style.display = 'block';
-            let age = prompt("Please enter your age:");
-            age = parseInt(age);
+            
             firstDigit = Math.floor(age / 10);
             secondDigit = age % 10;
             intermediateResult = firstDigit * 5;
