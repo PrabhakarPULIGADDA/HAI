@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculation Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Age Calculation Game</h1>
+        <p>Enter your age:</p>
+        <input type="text" id="ageInput">
+        <button onclick="calculateAge()">Start Game</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        function calculateAge() {
+            // Get user's age input
+            var ageInput = document.getElementById('ageInput').value;
+
+            // Step 1: Multiply the first number of their age by 5
+            var step1 = ageInput.charAt(0) * 5;
+            document.getElementById('result').innerHTML = `Step 1: ${ageInput.charAt(0)} x 5 = ${step1}<br>`;
+
+            // Step 2: Add 3
+            var step2 = step1 + 3;
+            document.getElementById('result').innerHTML += `Step 2: ${step1} + 3 = ${step2}<br>`;
+
+            // Step 3: Double the resulting figure
+            var step3 = step2 * 2;
+            document.getElementById('result').innerHTML += `Step 3: ${step2} x 2 = ${step3}<br>`;
+
+            // Step 4: Add the second number of their age to that number
+            var step4 = step3 + parseInt(ageInput.charAt(1));
+            document.getElementById('result').innerHTML += `Step 4: ${step3} + ${ageInput.charAt(1)} = ${step4}<br>`;
+
+            // Step 5: Subtract 6
+            var step5 = step4 - 6;
+            document.getElementById('result').innerHTML += `Step 5: ${step4} - 6 = ${step5}<br>`;
+
+            // Final result
+            document.getElementById('result').innerHTML += `<strong>Your current age is ${step5}</strong>`;
+        }
+    </script>
+</body>
+</html>
