@@ -58,6 +58,7 @@
 <body>
     <div class="container">
         <h1>Age Calculation Game</h1>
+        <h1>Namaskaram🙏</h1>
         <div id="instruction"></div>
         <input type="text" id="userInput" placeholder="Enter your result">
         <button onclick="nextStep()">Next Step</button>
@@ -65,28 +66,29 @@
     </div>
 
     <script>
-        var steps = [
-            { instruction: "Multiply the first number of your age by 5", result: 0 },
-            { instruction: "Add 3 to the result", result: 0 },
-            { instruction: "Double the resulting figure", result: 0 },
-            { instruction: "Add the second number of your age to that number", result: 0 },
-            { instruction: "Subtract 6 from the result to get your current age", result: 0 }
+        var instructions = [
+            "Multiply the first number of your age by 5",
+            "Add 3 to the result",
+            "Double the resulting figure(multiply with 2)",
+            "Add the second number of your age to that number",
+            "Subtract 6 from the result to get your current age"
         ];
 
+        var results = [];
         var currentStep = 0;
 
         function nextStep() {
             var userInput = parseInt(document.getElementById('userInput').value);
             
             if (!isNaN(userInput)) {
-                steps[currentStep].result = userInput;
-                document.getElementById('userInput').value = '';
-                
-                if (currentStep < steps.length - 1) {
+                results.push(userInput);
+                document.getElementById('userInput').value = ''; // Clear input field
+
+                if (currentStep < instructions.length - 1) {
                     currentStep++;
-                    document.getElementById('instruction').innerText = steps[currentStep].instruction;
+                    document.getElementById('instruction').innerText = instructions[currentStep];
                 } else {
-                    var finalAge = calculateFinalAge();
+                    var finalAge = results[results.length - 1];
                     document.getElementById('result').innerHTML = `<strong>Your current age is ${finalAge}</strong>`;
                     document.getElementById('instruction').style.display = 'none';
                     document.getElementById('userInput').style.display = 'none';
@@ -97,17 +99,8 @@
             }
         }
 
-        function calculateFinalAge() {
-            var result = parseInt(document.getElementById('userInput').value.charAt(0)) * 5;
-            result += 3;
-            result *= 2;
-            result += parseInt(document.getElementById('userInput').value.charAt(1));
-            result -= 6;
-            return result;
-        }
-
         // Initialize with the first instruction
-        document.getElementById('instruction').innerText = steps[currentStep].instruction;
+        document.getElementById('instruction').innerText = instructions[currentStep];
     </script>
 </body>
 </html>
