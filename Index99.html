@@ -64,12 +64,12 @@
 </head>
 <body>
     <div class="container" id="start-page">
-        <h1>Nammakam 🙏</h1>
+        <h1>🙏NAMASKARAM🙏</h1>
         <h2>Deducing Your Age Game</h2>
         <div class="instructions">
             <h3>Instructions:</h3>
             <ol>
-                <li>Follow My Instructions to Find Your age😄</li></li>
+                <li>FOLLOW MY INSTRUCTIONSTO FIND YOUR AGE😊.</li>
             </ol>
             <p>Click "Start Game" to begin.</p>
         </div>
@@ -79,7 +79,7 @@
     <div class="container" id="game-page" style="display:none;">
         <h2>Deducing Your Age Game</h2>
         <div id="question"></div>
-        <div id="result"></div>
+        <input type="number" id="userInput">
         <button onclick="nextStep()">Next Step</button>
     </div>
     
@@ -104,51 +104,59 @@
             "Add three to the result.",
             "Double the resulting figure.",
             "Add the second number of your age to that number.",
-            "Subtract six. The result will be your current age."
+            "Subtract six from the result. This is your age."
         ];
 
         let currentStepIndex = 0;
         let intermediateResult = 0;
         let firstDigit = 0;
-        let secondDigit = 0;
 
         function startGame() {
             document.getElementById('start-page').style.display = 'none';
             document.getElementById('game-page').style.display = 'block';
-            
-            firstDigit = Math.floor(age / 10);
-            secondDigit = age % 10;
-            intermediateResult = firstDigit * 5;
             displayQuestion();
-            displayResult();
         }
 
         function displayQuestion() {
             if (currentStepIndex < steps.length) {
                 document.getElementById('question').textContent = steps[currentStepIndex];
+                if (currentStepIndex === 3) {
+                    document.getElementById('userInput').value = '';
+                }
             } else {
-                endGame();
+                document.getElementById('question').style.display = 'none';
+                document.getElementById('userInput').style.display = 'none';
+                calculateFinalResult();
             }
         }
 
-        function displayResult() {
-            document.getElementById('result').textContent = `Current Result: ${intermediateResult}`;
-        }
-
         function nextStep() {
-            if (currentStepIndex === 1) {
+            const userInput = parseInt(document.getElementById('userInput').value);
+
+            if (isNaN(userInput)) {
+                alert("Please enter a valid number.");
+                return;
+            }
+
+            if (currentStepIndex === 0) {
+                firstDigit = userInput;
+                intermediateResult = userInput * 5;
+            } else if (currentStepIndex === 1) {
                 intermediateResult += 3;
             } else if (currentStepIndex === 2) {
                 intermediateResult *= 2;
             } else if (currentStepIndex === 3) {
-                intermediateResult += secondDigit;
-            } else if (currentStepIndex === 4) {
-                intermediateResult -= 6;
+                intermediateResult += userInput;
             }
 
+            document.getElementById('userInput').value = '';
             currentStepIndex++;
             displayQuestion();
-            displayResult();
+        }
+
+        function calculateFinalResult() {
+            intermediateResult -= 6;
+            endGame();
         }
 
         function endGame() {
