@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculation Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Age Calculation Game</h1>
+        <p id="instruction"></p>
+        <input type="text" id="userInput" placeholder="Enter your result">
+        <button onclick="nextStep()">Next Step</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        var steps = [
+            { instruction: "Multiply the first number of your age by 5", result: 0 },
+            { instruction: "Add 3 to the result", result: 0 },
+            { instruction: "Double the resulting figure", result: 0 },
+            { instruction: "Add the second number of your age to that number", result: 0 },
+            { instruction: "Subtract 6 from the result to get your current age", result: 0 }
+        ];
+
+        var currentStep = 0;
+
+        function nextStep() {
+            if (currentStep < steps.length) {
+                // Update result for current step
+                steps[currentStep].result = parseInt(document.getElementById('userInput').value);
+
+                // Display instruction and result for current step
+                document.getElementById('instruction').innerText = steps[currentStep].instruction;
+                document.getElementById('userInput').value = ''; // Clear input field
+
+                if (currentStep > 0) {
+                    // Calculate previous step's result and display it
+                    var previousResult = calculateStepResult(currentStep - 1);
+                    document.getElementById('result').innerHTML += `Step ${currentStep}: ${previousResult}<br>`;
+                }
+
+                currentStep++;
+
+                if (currentStep === steps.length) {
+                    // Final step, calculate and display final age
+                    var finalAge = calculateStepResult(currentStep - 1);
+                    document.getElementById('result').innerHTML += `<strong>Your current age is ${finalAge}</strong>`;
+                    document.getElementById('userInput').style.display = 'none'; // Hide input field
+                    document.querySelector('button').style.display = 'none'; // Hide "Next Step" button
+                }
+            }
+        }
+
+        function calculateStepResult(stepIndex) {
+            var result = 0;
+            switch (stepIndex) {
+                case 0:
+                    result = steps[stepIndex].result;
+                    break;
+                case 1:
+                    result = steps[stepIndex].result + 3;
+                    break;
+                case 2:
+                    result = steps[stepIndex].result * 2;
+                    break;
+                case 3:
+                    result = steps[stepIndex].result + parseInt(document.getElementById('ageInput').value.charAt(1));
+                    break;
+                case 4:
+                    result = steps[stepIndex].result - 6;
+                    break;
+                default:
+                    break;
+            }
+            return result;
+        }
+    </script>
+</body>
+</html>
