@@ -6,36 +6,66 @@
     <title>Age Calculation Game</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             background: linear-gradient(to right, #ffafbd, #ffc3a0);
+            animation: backgroundAnimation 10s ease infinite;
+        }
+
+        @keyframes backgroundAnimation {
+            0% { background: linear-gradient(to right, #ffafbd, #ffc3a0); }
+            50% { background: linear-gradient(to right, #ff9a9e, #fad0c4); }
+            100% { background: linear-gradient(to right, #ffafbd, #ffc3a0); }
         }
 
         .container {
             text-align: center;
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.9);
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             max-width: 400px;
-            width: 100%;
+            width: 90%;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         h1, h2 {
             color: #333;
         }
 
+        .colorful {
+            color: #e91e63;
+            font-weight: bold;
+            animation: textAnimation 1.5s ease infinite;
+        }
+
+        @keyframes textAnimation {
+            0%, 100% { color: #e91e63; }
+            50% { color: #673ab7; }
+        }
+
         input {
-            padding: 8px;
+            padding: 10px;
             margin-bottom: 10px;
             width: 100%;
             box-sizing: border-box;
             border: 2px solid #007bff;
             border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #0056b3;
+            outline: none;
         }
 
         button {
@@ -46,10 +76,21 @@
             cursor: pointer;
             border-radius: 4px;
             margin: 5px;
+            transition: background-color 0.3s;
         }
 
         button:hover {
             background-color: #0056b3;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #0056b3;
         }
 
         #instructions {
@@ -63,11 +104,6 @@
 
         .hidden {
             display: none;
-        }
-
-        .colorful {
-            color: #e91e63;
-            font-weight: bold;
         }
     </style>
 </head>
@@ -134,7 +170,7 @@
                 } else if (currentStep === 2) {
                     tempResult = results[1] * 2;
                 } else if (currentStep === 3) {
-                    tempResult = results[2] + (userInput % 10);
+                    tempResult = results[2] + userInput;
                 } else if (currentStep === 4) {
                     tempResult = results[3] - 6;
                 }
