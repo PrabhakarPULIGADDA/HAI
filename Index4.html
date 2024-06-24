@@ -64,12 +64,17 @@
         .hidden {
             display: none;
         }
+
+        .colorful {
+            color: #e91e63;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div id="home">
-            <h1>NAMASKARAM 🙏</h1>
+            <h1 class="colorful">NAMASKARAM 🙏</h1>
             <h2>Welcome to the Age Calculation Game</h2>
             <p>Follow my instructions to find your age.</p>
             <button onclick="startGame()">Play Now</button>
@@ -103,7 +108,6 @@
         var results = [];
         var currentStep = 0;
         var tempResult;
-        var ageDigits;
 
         function startGame() {
             document.getElementById('home').classList.add('hidden');
@@ -113,7 +117,6 @@
             currentStep = 0;
             results = [];
             tempResult = null;
-            ageDigits = [];
             document.getElementById('instruction').innerText = instructions[currentStep];
             document.getElementById('userInput').value = '';
         }
@@ -126,31 +129,22 @@
 
                 if (currentStep === 0) {
                     tempResult = userInput;
-                    ageDigits = [Math.floor(tempResult / 5)];
                 } else if (currentStep === 1) {
-                    tempResult = results[0] + 3;
+                    tempResult = (results[0] * 5) + 3;
                 } else if (currentStep === 2) {
                     tempResult = results[1] * 2;
                 } else if (currentStep === 3) {
-                    tempResult = results[2] + parseInt(ageDigits[0] % 10);
+                    tempResult = results[2] + (userInput % 10);
                 } else if (currentStep === 4) {
                     tempResult = results[3] - 6;
                 }
 
-                if (userInput !== tempResult) {
-                    alert("The entered result is incorrect. Please follow the instructions carefully.");
-                    results.pop();
-                    return;
-                }
-
-                document.getElementById('userInput').value = ''; // Clear input field
-
                 if (currentStep < instructions.length - 1) {
                     currentStep++;
                     document.getElementById('instruction').innerText = instructions[currentStep];
+                    document.getElementById('userInput').value = ''; // Clear input field
                 } else {
-                    var finalAge = tempResult;
-                    document.getElementById('finalResult').innerHTML = `<strong>Your current age is ${finalAge}</strong>`;
+                    document.getElementById('finalResult').innerHTML = `<strong class="colorful">Your current age is ${tempResult}</strong>`;
                     document.getElementById('game').classList.add('hidden');
                     document.getElementById('result').classList.remove('hidden');
                 }
