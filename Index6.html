@@ -5,21 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Age Calculation Game</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
         body {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-family: 'Roboto', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: linear-gradient(to right, #ffafbd, #ffc3a0);
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
             animation: backgroundAnimation 10s ease infinite;
         }
 
         @keyframes backgroundAnimation {
-            0% { background: linear-gradient(to right, #ffafbd, #ffc3a0); }
+            0% { background: linear-gradient(to right, #ff7e5f, #feb47b); }
             50% { background: linear-gradient(to right, #ff9a9e, #fad0c4); }
-            100% { background: linear-gradient(to right, #ffafbd, #ffc3a0); }
+            100% { background: linear-gradient(to right, #ff7e5f, #feb47b); }
         }
 
         .container {
@@ -43,14 +44,14 @@
         }
 
         .colorful {
-            color: #e91e63;
+            color: #ff6f61;
             font-weight: bold;
             animation: textAnimation 1.5s ease infinite;
         }
 
         @keyframes textAnimation {
-            0%, 100% { color: #e91e63; }
-            50% { color: #673ab7; }
+            0%, 100% { color: #ff6f61; }
+            50% { color: #d72631; }
         }
 
         input {
@@ -58,19 +59,19 @@
             margin-bottom: 10px;
             width: 100%;
             box-sizing: border-box;
-            border: 2px solid #007bff;
+            border: 2px solid #ff6f61;
             border-radius: 4px;
             transition: border-color 0.3s;
         }
 
         input:focus {
-            border-color: #0056b3;
+            border-color: #d72631;
             outline: none;
         }
 
         button {
             padding: 10px 20px;
-            background-color: #007bff;
+            background-color: #ff6f61;
             color: white;
             border: none;
             cursor: pointer;
@@ -80,17 +81,17 @@
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #d72631;
         }
 
         a {
-            color: #007bff;
+            color: #ff6f61;
             text-decoration: none;
             transition: color 0.3s;
         }
 
         a:hover {
-            color: #0056b3;
+            color: #d72631;
         }
 
         #instructions {
