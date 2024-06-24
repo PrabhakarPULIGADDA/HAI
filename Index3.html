@@ -103,6 +103,7 @@
         var results = [];
         var currentStep = 0;
         var tempResult;
+        var ageDigits;
 
         function startGame() {
             document.getElementById('home').classList.add('hidden');
@@ -112,6 +113,7 @@
             currentStep = 0;
             results = [];
             tempResult = null;
+            ageDigits = [];
             document.getElementById('instruction').innerText = instructions[currentStep];
             document.getElementById('userInput').value = '';
         }
@@ -124,20 +126,20 @@
 
                 if (currentStep === 0) {
                     tempResult = userInput;
+                    ageDigits = [Math.floor(tempResult / 5)];
                 } else if (currentStep === 1) {
-                    tempResult += 3;
+                    tempResult = results[0] + 3;
                 } else if (currentStep === 2) {
-                    tempResult *= 2;
+                    tempResult = results[1] * 2;
                 } else if (currentStep === 3) {
-                    tempResult += parseInt(results[0] / 5) % 10;
+                    tempResult = results[2] + parseInt(ageDigits[0] % 10);
                 } else if (currentStep === 4) {
-                    tempResult -= 6;
+                    tempResult = results[3] - 6;
                 }
 
                 if (userInput !== tempResult) {
                     alert("The entered result is incorrect. Please follow the instructions carefully.");
                     results.pop();
-                    tempResult = results[currentStep - 1];
                     return;
                 }
 
