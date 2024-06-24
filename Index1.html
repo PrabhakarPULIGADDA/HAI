@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculation Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(to right, #ffafbd, #ffc3a0);
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 2px solid #007bff;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #instructions {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="home">
+            <h1>NAMASKARAM 🙏</h1>
+            <h2>Welcome to the Age Calculation Game</h2>
+            <p>Follow my instructions to find your age.</p>
+            <button onclick="startGame()">Play Now</button>
+        </div>
+        <div id="game" class="hidden">
+            <h2>Age Calculation Game</h2>
+            <div id="instruction"></div>
+            <input type="text" id="userInput" placeholder="Enter your result">
+            <button onclick="nextStep()">Next Step</button>
+        </div>
+        <div id="result" class="hidden">
+            <p id="finalResult"></p>
+            <button onclick="startGame()">Play Again</button>
+            <button onclick="showLinks()">Useful Links</button>
+        </div>
+        <div id="links" class="hidden">
+            <a href="https://www.linkedin.com" target="_blank">LinkedIn</a><br>
+            <a href="http://arvindguptatoys.com" target="_blank">Arvind Gupta Toys</a>
+        </div>
+    </div>
+
+    <script>
+        var instructions = [
+            "Multiply the first number of your age by 5",
+            "Add 3 to the result",
+            "Double the resulting figure",
+            "Add the second number of your age to that number",
+            "Subtract 6 from the result to get your current age"
+        ];
+
+        var results = [];
+        var internalResults = [];
+        var currentStep = 0;
+        var ageDigits;
+
+        function startGame() {
+            document.getElementById('home').classList.add('hidden');
+            document.getElementById('game').classList.remove('hidden');
+            document.getElementById('result').classList.add('hidden');
+            document.getElementById('links').classList.add('hidden');
+            currentStep = 0;
+            results = [];
+            internalResults = [];
+            document.getElementById('instruction').innerText = instructions[currentStep];
+            document.getElementById('userInput').value = '';
+        }
+
+        function nextStep() {
+            var userInput = parseInt(document.getElementById('userInput').value);
+            
+            if (!isNaN(userInput)) {
+                results.push(userInput);
+
+                // Perform internal calculation
+                if (currentStep === 0) {
+                    ageDigits = userInput / 5; // Assuming correct input
+                    internalResults.push(ageDigits);
+                } else if (currentStep === 1) {
+                    internalResults.push(internalResults[currentStep - 1] * 5 + 3);
+                } else if (currentStep === 2) {
+                    internalResults.push(internalResults[currentStep - 1] * 2);
+                } else if (currentStep === 3) {
+                    var ageStr = ageDigits.toString();
+                    var secondDigit = parseInt(ageStr.length > 1 ? ageStr[1] : ageStr[0]);
+                    internalResults.push(internalResults[currentStep - 1] + secondDigit);
+                } else if (currentStep === 4) {
+                    internalResults.push(internalResults[currentStep - 1] - 6);
+                }
+
+                if (userInput !== internalResults[currentStep]) {
+                    alert("The entered result is incorrect. Please follow the instructions carefully.");
+                    results.pop();
+                    internalResults.pop();
+                    return;
+                }
+
+                document.getElementById('userInput').value = ''; // Clear input field
+
+                if (currentStep < instructions.length - 1) {
+                    currentStep++;
+                    document.getElementById('instruction').innerText = instructions[currentStep];
+                } else {
+                    var finalAge = internalResults[internalResults.length - 1];
+                    document.getElementById('finalResult').innerHTML = `<strong>Your current age is ${finalAge}</strong>`;
+                    document.getElementById('game').classList.add('hidden');
+                    document.getElementById('result').classList.remove('hidden');
+                }
+            } else {
+                alert('Please enter a valid number.');
+            }
+        }
+
+        function showLinks() {
+            document.getElementById('links').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
