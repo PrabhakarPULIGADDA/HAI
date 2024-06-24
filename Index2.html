@@ -101,9 +101,8 @@
         ];
 
         var results = [];
-        var internalResults = [];
         var currentStep = 0;
-        var ageDigits;
+        var tempResult;
 
         function startGame() {
             document.getElementById('home').classList.add('hidden');
@@ -112,7 +111,7 @@
             document.getElementById('links').classList.add('hidden');
             currentStep = 0;
             results = [];
-            internalResults = [];
+            tempResult = null;
             document.getElementById('instruction').innerText = instructions[currentStep];
             document.getElementById('userInput').value = '';
         }
@@ -123,26 +122,22 @@
             if (!isNaN(userInput)) {
                 results.push(userInput);
 
-                // Perform internal calculation
                 if (currentStep === 0) {
-                    ageDigits = userInput / 5; // Assuming correct input
-                    internalResults.push(ageDigits);
+                    tempResult = userInput;
                 } else if (currentStep === 1) {
-                    internalResults.push(internalResults[currentStep - 1] * 5 + 3);
+                    tempResult += 3;
                 } else if (currentStep === 2) {
-                    internalResults.push(internalResults[currentStep - 1] * 2);
+                    tempResult *= 2;
                 } else if (currentStep === 3) {
-                    var ageStr = ageDigits.toString();
-                    var secondDigit = parseInt(ageStr.length > 1 ? ageStr[1] : ageStr[0]);
-                    internalResults.push(internalResults[currentStep - 1] + secondDigit);
+                    tempResult += parseInt(results[0] / 5) % 10;
                 } else if (currentStep === 4) {
-                    internalResults.push(internalResults[currentStep - 1] - 6);
+                    tempResult -= 6;
                 }
 
-                if (userInput !== internalResults[currentStep]) {
+                if (userInput !== tempResult) {
                     alert("The entered result is incorrect. Please follow the instructions carefully.");
                     results.pop();
-                    internalResults.pop();
+                    tempResult = results[currentStep - 1];
                     return;
                 }
 
@@ -152,7 +147,7 @@
                     currentStep++;
                     document.getElementById('instruction').innerText = instructions[currentStep];
                 } else {
-                    var finalAge = internalResults[internalResults.length - 1];
+                    var finalAge = tempResult;
                     document.getElementById('finalResult').innerHTML = `<strong>Your current age is ${finalAge}</strong>`;
                     document.getElementById('game').classList.add('hidden');
                     document.getElementById('result').classList.remove('hidden');
